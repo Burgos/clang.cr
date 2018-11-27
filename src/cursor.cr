@@ -317,6 +317,26 @@ module Clang
       Clang.string(LibC.clang_Cursor_getMangling(self))
     end
 
+    def literal
+      Clang.string(LibC.clang_getLiteralString(self))
+    end
+
+    def operator_str
+      Clang.string(LibC.clang_getOperatorString(self))
+    end
+
+    def for_init
+      Cursor.new(LibC.clang_getForStmtInit(self))
+    end
+
+    def for_cond
+      Cursor.new(LibC.clang_getForStmtCond(self))
+    end
+
+    def for_inc
+      Cursor.new(LibC.clang_getForStmtBody(self))
+    end
+
     def cxx_manglings
       if list = LibC.clang_Cursor_getCXXManglings(self)
         Array(String).new(list.value.count) do |i|
