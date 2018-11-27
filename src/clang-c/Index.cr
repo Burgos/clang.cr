@@ -797,10 +797,56 @@ lib LibC
     Byref = 16
     Oneway = 32
   end
+
+  enum CXBinaryOpCode : UInt
+      # Operators listed in order of precedence.
+      # Note that additions to this should also update the StmtVisitor class.
+      PtrMemD, PtrMemI,       # [C++ 5.5] Pointer-to-member operators.
+      Mul, Div, Rem,       # [C99 6.5.5] Multiplicative operators.
+      Add, Sub,               # [C99 6.5.6] Additive operators.
+      Shl, Shr,               # [C99 6.5.7] Bitwise shift operators.
+      LT, GT, LE, GE,   # [C99 6.5.8] Relational operators.
+      EQ, NE,                 # [C99 6.5.9] Equality operators.
+      And,                       # [C99 6.5.10] Bitwise AND operator.
+      Xor,                       # [C99 6.5.11] Bitwise XOR operator.
+      Or,                        # [C99 6.5.12] Bitwise OR operator.
+      LAnd,                      # [C99 6.5.13] Logical AND operator.
+      LOr,                       # [C99 6.5.14] Logical OR operator.
+      Assign, MulAssign,      # [C99 6.5.16] Assignment operators.
+      DivAssign, RemAssign,
+      AddAssign, SubAssign,
+      ShlAssign, ShrAssign,
+      AndAssign, XorAssign,
+      OrAssign,
+      Comma,                      # [C99 6.5.17] Comma operator.
+      Unknown
+  end
+
+  enum CXUnaryOpCode : UInt
+      # Note that additions to this should also update the StmtVisitor class.
+      PostInc, PostDec, # [C99 6.5.2.4] Postfix increment and decrement
+      PreInc, PreDec,   # [C99 6.5.3.1] Prefix increment and decrement
+      AddrOf, Deref,    # [C99 6.5.3.2] Address and indirection
+      Plus, Minus,      # [C99 6.5.3.3] Unary arithmetic
+      Not, LNot,        # [C99 6.5.3.3] Unary arithmetic
+      Real, Imag,       # "__real expr"/"__imag expr" Extension.
+      Extension,            # __extension__ marker.
+      Unknown
+  end
+
   fun clang_Cursor_getObjCDeclQualifiers(CXCursor) : UInt
   fun clang_Cursor_isObjCOptional(CXCursor) : UInt
   fun clang_Cursor_isVariadic(CXCursor) : UInt
   fun clang_Cursor_isExternalSymbol(CXCursor, CXString*, CXString*, UInt*) : UInt
+  fun clang_getCursorSourceFile(CXCursor) : CXFile
+  fun clang_getBinaryOpCode(CXCursor) : CXBinaryOpCode
+  fun clang_getUnaryOpCode(CXCursor) : CXUnaryOpCode
+  fun clang_getLiteralString(CXCursor) : CXString
+  fun clang_getOperatorString(CXCursor) : CXString
+  fun clang_getForStmtInit(CXCursor) : CXCursor
+  fun clang_getForStmtCond(CXCursor) : CXCursor
+  fun clang_getForStmtInc(CXCursor) : CXCursor
+  fun clang_getForStmtBody(CXCursor) : CXCursor
   fun clang_Cursor_getCommentRange(CXCursor) : CXSourceRange
   fun clang_Cursor_getRawCommentText(CXCursor) : CXString
   fun clang_Cursor_getBriefCommentText(CXCursor) : CXString
