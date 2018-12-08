@@ -847,6 +847,7 @@ lib LibC
   fun clang_getForStmtCond(CXCursor) : CXCursor
   fun clang_getForStmtInc(CXCursor) : CXCursor
   fun clang_getForStmtBody(CXCursor) : CXCursor
+  fun clang_getFunctionBody(CXCursor) : CXCursor
   fun clang_Cursor_getCommentRange(CXCursor) : CXSourceRange
   fun clang_Cursor_getRawCommentText(CXCursor) : CXString
   fun clang_Cursor_getBriefCommentText(CXCursor) : CXString

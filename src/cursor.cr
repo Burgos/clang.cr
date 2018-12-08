@@ -71,6 +71,10 @@ module Clang
       Cursor.new LibC.clang_getCursorSemanticParent(self)
     end
 
+    def function_body
+      Cursor.new LibC.clang_getFunctionBody(self)
+    end
+
     def lexical_parent
       Cursor.new LibC.clang_getCursorLexicalParent(self)
     end
