@@ -338,8 +338,13 @@ module Clang
     end
 
     def for_inc
+      Cursor.new(LibC.clang_getForStmtInc(self))
+    end
+
+    def for_body
       Cursor.new(LibC.clang_getForStmtBody(self))
     end
+
 
     def cxx_manglings
       if list = LibC.clang_Cursor_getCXXManglings(self)
